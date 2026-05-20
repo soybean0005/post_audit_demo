@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Process Flow</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/process.css"/>
+</head>
+
+<body>
+
+  <!-- Background Glow -->
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="process.html" class="nav-item active">Process</a>
+
+  </nav>
+
+  <main class="process-container">
+
+    <h1 class="process-title">
+      Post-audit Flows
+    </h1>
+
+    <div class="flow-grid">
+
+    <!-- ROW 1 -->
+    <a href="cds-send-auditor.html" class="process-link">
+
+    <div class="process-box">
+        CDS need send to auditor
+    </div>
+
+    </a>
+
+    <div class="arrow horizontal"></div>
+
+    <a href="ap-wait-auditor.html" class="process-link">
+
+    <div class="process-box">
+        AP wait for auditor
+    </div>
+
+    </a>
+
+    <div class="arrow horizontal"></div>
+
+    <div class="process-box">
+        Waiting report
+    </div>
+
+    <!-- ROW 2 DOWN -->
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <div class="arrow vertical"></div>
+
+    <!-- ROW 2 -->
+    <div class="process-box">
+        Draft cert in process
+    </div>
+
+    <div class="arrow horizontal reverse"></div>
+
+    <div class="process-box">
+        Under review
+    </div>
+
+    <div class="arrow horizontal reverse"></div>
+
+    <div class="process-box review">
+        Set review plan
+    </div>
+
+    <!-- ROW 3 DOWN -->
+    <div class="arrow vertical"></div>
+
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <!-- ROW 3 -->
+    <div class="process-box">
+        Payment check
+    </div>
+
+    <div class="arrow horizontal"></div>
+
+    <a href="send-cert.html" class="process-link">
+
+    <div class="process-box">
+        Org cert need to send
+    </div>
+
+    </a>
+
+    <div class="arrow horizontal"></div>
+
+    <div class="process-box done">
+        Done
+    </div>
+
+    </div>
+
+    <!-- EXTRA -->
+    <section class="extra-process">
+      <a href="generate-letter.html" class="process-link">
+      <div class="extra-box">
+        Close job
+      </div>
+      </a>
+
+      <a href="generate-letter.html" class="process-link">
+        <div class="extra-box warning">
+            Suspension
+        </div>
+      </a>
+
+      <a href="generate-letter.html" class="process-link">
+      <div class="extra-box danger">
+        Withdraw / Cancel
+      </div>
+      </a>
+
+      <a href="generate-letter.html" class="process-link">
+      <div class="extra-box">
+        Generate letters
+        <div style="font-size: 12px;">Confirmation/Recommendation</div>
+        <div style="font-size: 12px;">Suspension/Withdraw/Cancel</div>
+
+      </div>
+      </a>
+
+    </section>
+
+  </main>
+
+  <script src="js/script.js"></script>
+
+</body>
+</html>
