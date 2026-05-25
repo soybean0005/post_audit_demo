@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>CDS need send to auditor</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <link rel="stylesheet" href="../../css/detail.css"/>
+</head>
+
+<body>
+
+  <!-- Background Glow -->
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+
+  <!-- Navbar -->
+  <div id="navbar-placeholder"></div>
+
+  <main class="detail-container">
+
+    <!-- PAGE TITLE -->
+    <h1 class="detail-title">CDS need send to auditor</h1>
+
+    <!-- CONTENT -->
+    <section class="content-section">
+      <div class="content-card">
+        <h2>Tổng quan</h2>
+        <p>Phụ trách post-audit sẽ gửi thông tin cho auditor, trong đó có việc thực hiện nhiều thao tác để có được file CDS.</p>
+      </div>
+
+      <div class="content-card">
+        <h2>Các vấn đề gặp phải</h2>
+        <ul>
+          <li>Quên không gửi thông tin cho Auditor.</li>
+          <li>Thực hiện nhiều thao tác để có được file CDS.</li>
+        </ul>
+      </div>
+
+      <div class="content-card">
+        <h2>Giải pháp</h2>
+        <ul>
+          <li>Khi đến ngày cần gửi thông tin cho auditor, phụ trách sẽ nhận được thông báo số lượng jobs cần gửi khi mở file.</li>
+          <li>File ACT sẽ thực hiện thay các thao tác lấy và đổi tên file CDS.</li>
+        </ul>
+      </div>
+    </section>
+
+    <br>
+    <div>Thông báo số lượng và note những jobs cần gửi thông tin.</div>
+    <br>
+
+    <!-- GIF SECTION -->
+    <section class="gif-section">
+      <img src="../../image/CDS need send/image1.png" alt="CDS need send" class="tutorial-gif"/>
+    </section>
+
+    <div>Hỗ trợ download và đổi tên file CDS.</div>
+    <br>
+
+    <!-- GIF SECTION -->
+    <section class="gif-section">
+      <img src="../../image/CDS need send/cds-need-send.gif" alt="CDS need send" class="tutorial-gif"/>
+    </section>
+  </main>
+
+  <!-- JS -->
+  <script src="../../js/script.js"></script>
+  <script>
+    // Load navbar.html vào placeholder
+    fetch("../navbar.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("navbar-placeholder").innerHTML = data;
+      });
+  </script>
+
+  <!-- SIDE NAVIGATION -->
+  <a href="add-new-jobs.html" class="side-nav left-nav">&#10094;</a>
+  <a href="ap-wait-auditor.html" class="side-nav right-nav">&#10095;</a>
+</body>
+</html>

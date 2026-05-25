@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Guideline - Auto Reminder Email</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="../../css/style.css" />
+        <link rel="stylesheet" href="../../css/detail.css" />
+    </head>
+    <script>
+        function copyPrompt() {
+            const card = document.getElementById("prompt-card");
+
+            const text = card.querySelector(".prompt-content").textContent;
+
+            navigator.clipboard
+                .writeText(text)
+                .then(() => {
+                    alert("Copied prompt!");
+                })
+                .catch((err) => {
+                    console.error("Copy failed:", err);
+                });
+        }
+    </script>
+    <body>
+        <!-- Background Glow -->
+        <div class="glow glow1"></div>
+        <div class="glow glow2"></div>
+
+        <!-- Navbar -->
+        <div id="navbar-placeholder"></div>
+
+        <main class="detail-container">
+            <!-- PAGE TITLE -->
+            <h1 class="detail-title">Hướng dẫn gửi email tự động</h1>
+
+            <!-- CONTENT -->
+            <section class="content-section">
+                <div class="content-card">
+                    <h2>Mục đích</h2>
+                    <p>
+                        Macro được sử dụng để tự động gửi email nhắc nhở tới Auditor khi Audit Plan (AP) chưa được gửi
+                        đúng thời hạn trước ngày audit.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h2>Flow hoạt động của macro</h2>
+                    <ol>
+                        <li>Đọc danh sách job trong sheet Backlog</li>
+                        <li>Kiểm tra từng dòng có thỏa điều kiện gửi mail hay không</li>
+                        <li>Lấy tên Auditor Lead</li>
+                        <li>Tìm email Auditor từ sheet Auditors</li>
+                        <li>Tạo email Outlook và gửi</li>
+                        <li>Đánh dấu đã gửi reminder</li>
+                        <li>Hiển thị tổng số email đã gửi</li>
+                    </ol>
+                </div>
+
+                <div class="content-card">
+                    <h2>Các sheet liên quan</h2>
+                    <ul>
+                        <li>
+                            Sheet Backlog: <br /><img
+                                src="../../image/AP wait auditor/ap-wait-auditor_image_1.png"
+                                alt="Sheet Backlog"
+                                class="tutorial-gif"
+                            />
+                        </li>
+                        <li>
+                            Sheet Auditors: <br /><img
+                                src="../../image/AP wait auditor/ap-wait-auditor_image_2.png"
+                                alt="Sheet Auditors"
+                                class="tutorial-gif"
+                                style="width: auto; height: 50%"
+                            />
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h2>Bước 1: Xác định đối tượng nhận email và số lần nhắc nhở</h2>
+                    <p>Ví dụ:</p>
+                    <ul>
+                        <li>Đối tượng nhận email: Auditor Lead</li>
+                        <li>Số lần nhắc nhở: 1 lần</li>
+                        <li>Trạng thái hiện tại trong bảng: AP wait for auditor</li>
+                    </ul>
+                    <p><strong>Mapping dữ liệu:</strong></p>
+                    <ul>
+                        <li>Tên Auditor: Sheet Backlog - Cột H</li>
+                        <li>Email Auditor: Sheet Auditors - Cột C</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h2>Bước 2: Xác định điều kiện để gửi email nhắc nhở</h2>
+                    <p>Email chỉ được gửi khi thỏa tất cả các điều kiện sau:</p>
+                    <ul>
+                        <li>Audit date còn dưới hoặc bằng 10 working days</li>
+                        <li>Status hiện tại là 'AP wait for auditor'</li>
+                        <li>Chưa từng gửi email reminder</li>
+                        <li>Có thông tin Audit start date</li>
+                        <li>Có Auditor Lead</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h2>Bước 3: Xác định nội dung email</h2>
+                    <p>
+                        <strong>Subject format:</strong> [Action Required - Audit Plan Submission] JobID - Client Name
+                    </p>
+                    <p>Nội dung email bao gồm:</p>
+                    <ul>
+                        <li>Job ID</li>
+                        <li>Client Name</li>
+                        <li>Audit Standard</li>
+                        <li>Start Audit Date</li>
+                        <li>Current Status</li>
+                        <li>Yêu cầu Auditor gửi Audit Plan</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h2>Bước 4: Cơ chế chống gửi trùng email</h2>
+                    <p>Sau khi gửi email thành công, hệ thống sẽ ghi nhận vào cột P.</p>
+                    <p>Format: Remind_dd-mmm-yyyy</p>
+                    <p>Ví dụ: Remind_25-May-2026</p>
+                </div>
+
+                <div class="content-card copy-card" id="prompt-card">
+                    <h2>Bước 5.1: Prompt tạo code VBA</h2>
+                    <p>
+                        <b>
+                            "Copy Prompt này về, chỉnh sửa lại nội dung cho phù hợp với file Excel của team. Sử dụng AI
+                            để hỗ trợ tạo code"</b
+                        >
+                    </p>
+                    <button class="copy-btn" onclick="copyPrompt()">Copy Prompt</button>
+<div class="prompt-content">
+                    <p>Yêu cầu chi tiết:</p>
+                    <p>
+                        Tôi muốn tạo một VBA Macro trong Excel để tự động gửi email reminder bằng Outlook cho Auditor
+                        khi Audit Plan chưa được gửi đúng hạn.
+                    </p>
+                    <p>Yêu cầu chi tiết như sau:</p>
+                    <p><strong>1. Môi trường</strong></p>
+                    <ul>
+                        <li>Sử dụng Excel VBA</li>
+                        <li>Sử dụng Outlook Application để gửi mail</li>
+                        <li>Mail ở dạng HTML Body</li>
+                        <li>Chạy macro trực tiếp trong file Excel</li>
+                    </ul>
+                    <p><strong>2. Cấu trúc sheet Excel</strong></p>
+                    <p><strong>Sheet "Backlog"</strong></p>
+                    <p>Dùng để chứa danh sách audit jobs.</p>
+                    <p>Dữ liệu bắt đầu từ dòng 5.</p>
+                    <p>Các cột:</p>
+                    <ul>
+                        <li>Column A = Job number</li>
+                        <li>Column B = Client Name</li>
+                        <li>Column C = Standard</li>
+                        <li>Column F = Audit start date</li>
+                        <li>Column H = Auditor Lead</li>
+                        <li>Column K = Current Status</li>
+                        <li>
+                            Column O = Send CDS/client docs. to auditor (cell có giá trị nghĩa đã gửi client info cho
+                            Auditor)
+                        </li>
+                        <li>
+                            Column P = Audit plan + Survey to client (cell có giá trị nghĩa đã gửi audit plan cho khách
+                            hàng)
+                        </li>
+                    </ul>
+                    <p><strong>Sheet "Auditors"</strong></p>
+                    <p>Dùng để mapping Auditor Name và Email.</p>
+                    <p>Các cột:</p>
+                    <ul>
+                        <li>Column B = Auditor Name</li>
+                        <li>Column C = Auditor Email</li>
+                    </ul>
+                    <p><strong>3. Business Logic</strong></p>
+                    <p>Tạo macro tên: <b>SendMail_When_Overdue_SendAP()</b></p>
+                    <p>Macro sẽ loop tất cả dòng trong sheet "Backlog".</p>
+                    <p>Điều kiện để gửi email:</p>
+                    <ul>
+                        <li>Working day countdown đến audit date &lt;= 10 ngày</li>
+                        <li>Column K phải bằng: "AP wait for auditor"</li>
+                        <li>Column P phải đang trống</li>
+                        <li>Column O không được trống</li>
+                        <li>Column H phải có Auditor Lead</li>
+                    </ul>
+                    <p>Nếu thỏa điều kiện:</p>
+                    <ul>
+                        <li>Lấy tên Auditor ở column H</li>
+                        <li>Tìm email Auditor trong sheet "Auditors"</li>
+                        <li>Gửi email reminder bằng Outlook</li>
+                        <li>CC cho email Owner lấy từ Data!B1</li>
+                        <li>Sau khi gửi thành công: ghi vào column P: Remind_dd-mmm-yyyy</li>
+                    </ul>
+                    <p>Ví dụ: Remind_25-May-2026</p>
+                    <p><strong>4. Hàm tính Working Days</strong></p>
+                    <p>Tạo function: Function workingDays(startDate As Date) As Long</p>
+                    <p>Code logic:</p>
+                    <p>Function workingDays(startDate As Date) As Long</p>
+                    <p>    workingDays = Application.WorksheetFunction.NetworkDays(startDate, Date)</p>
+                    <p>End Function</p>
+                    <p>Giải thích:</p>
+                    <ul>
+                        <li>Dùng hàm NetworkDays của Excel</li>
+                        <li>Tính số working days giữa Start Audit Date và ngày hiện tại</li>
+                        <li>Macro phải dùng function này để check điều kiện gửi reminder</li>
+                    </ul>
+                    <p>Ví dụ: CountDownDay = workingDays(ws.Cells(i, "F"). Value)</p>
+                    <p>Điều kiện: If CountDownDay &gt;= -10 Then</p>
+                    <p><strong>5. Hàm tìm email Auditor</strong></p>
+
+                    <p>Tạo function: Function GetEmailByName(ws As Worksheet, auditor As String) As String</p>
+                    <p>Logic:</p>
+                    <ul>
+                        <li>Loop tất cả dòng trong sheet Auditors</li>
+                        <li>So sánh Auditor Name ở column B</li>
+                        <li>Nếu match thì return email ở column C</li>
+                        <li>Nếu không tìm thấy thì return empty string</li>
+                    </ul>
+                    <p><strong>6. Nội dung email</strong></p>
+                    <p>Subject format: [Action Required - Audit Plan Submission] JobID - Client Name</p>
+                    <p>Ví dụ: [Action Required - Audit Plan Submission] AU12345 - ABC Company</p>
+                    <p>HTML Body phải chứa:</p>
+                    <ul>
+                        <li>Greeting</li>
+                        <li>Job ID</li>
+                        <li>Client Name</li>
+                        <li>Audit Standard</li>
+                        <li>Start Audit Date</li>
+                        <li>Current Status</li>
+                        <li>Reminder content</li>
+                        <li>Notification section</li>
+                    </ul>
+                    <p><strong>7. Outlook Requirements</strong></p>
+                    <p>
+                        Tạo Sub: SendOutlookMail(auditorEmail As String, OwnerEmail As String, ws As Worksheet, rowNum
+                        As Long)
+                    </p>
+                    <p>Yêu cầu:</p>
+                    <ul>
+                        <li>Use CreateObject("Outlook.Application")</li>
+                        <li>CreateItem(0)</li>
+                        <li>Use .HTMLBody</li>
+                        <li>Use .To</li>
+                        <li>Use .CC</li>
+                        <li>Có option: .Display hoặc .Send</li>
+                    </ul>
+                    <p><strong>8. Additional Requirements</strong></p>
+                    <ul>
+                        <li>Preserve current filter mode</li>
+                        <li>Disable AutoFilter trước khi loop</li>
+                        <li>Restore filter sau khi chạy xong</li>
+                        <li>Hiển thị MsgBox:</li>
+                        <ul>
+                            <li>số lượng mail đã gửi</li>
+                            <li>hoặc thông báo không có job cần gửi</li>
+                        </ul>
+                        <li>Có validation nếu Auditor Lead bị trống</li>
+                    </ul>
+                    <p><strong>9. Coding Style</strong></p>
+                    <ul>
+                        <li>Viết clean VBA code</li>
+                        <li>Có comment cho từng block logic</li>
+                        <li>Tách function rõ ràng</li>
+                        <li>Dùng biến rõ nghĩa</li>
+                        <li>Tối ưu để dễ maintain sau này</li>
+                    </ul>
+                    <p><strong>10. Important</strong></p>
+                    <p>Generate full VBA code bao gồm:</p>
+                    <ul>
+                        <li>Function workingDays()</li>
+                        <li>Function GetEmailByName()</li>
+                        <li>Sub SendMail_When_Overdue_SendAP()</li>
+                        <li>Sub SendOutlookMail()</li>
+                    </ul>
+                    <p>Code phải runnable trực tiếp trong Excel VBA.</p>
+</div>
+                </div>
+                <div class="content-card">
+                    <h2>5.2 Tạo module</h2>
+                    <p><strong>Step 1 — Open VBA Editor</strong></p>
+                    <ul>
+                        <li>Open Excel file</li>
+                        <li>Press: ALT + F11 để mở VBA Editor.</li>
+                    </ul>
+                    <p><strong>Step 2 — Create Standard Module</strong></p>
+                    <ul>
+                        <li>Trong Project Explorer: Right-click VBAProject</li>
+                        <li>Select: Insert → Module</li>
+                    </ul>
+                    <p>Tạo module mới:</p>
+                    <p>Module1</p>
+                    <p>Dán các code là AI tạo vào Module:</p>
+                    <p><strong>Step 3 — Add Workbook Open Event</strong></p>
+                    <p>Trong VBA Project:</p>
+                    <ul>
+                        <li>Double click: ThisWorkbook</li>
+                    </ul>
+                    <p>Dán code:</p>
+                    <p>Private Sub Workbook_Open()</p>
+                    <p>    Call SendMail_When_Overdue_SendAP</p>
+                    <p>End Sub</p>
+                    <p><strong>Step 4 — Save Excel File</strong></p>
+                    <p>Save file dưới format: Excel Macro-Enabled Workbook (*.xlsm)</p>
+                    <p><strong>Step 5 — Enable Macro</strong></p>
+                    <p>
+                        Khi mở file: Click: <strong>Enable Content</strong> hoặc <strong>Enable Macro</strong> để macro
+                        hoạt động.
+                    </p>
+                    <p><strong>Step 6 — Outlook Requirement</strong></p>
+                    <ul>
+                        <li>Outlook phải được cài trên máy</li>
+                        <li>User phải login Outlook trước khi chạy macro</li>
+                        <li>Nếu dùng <strong>.Send</strong>: mail sẽ gửi tự động</li>
+                        <li>Nếu dùng <strong>.Display</strong>: mail sẽ mở draft trước khi gửi</li>
+                    </ul>
+                    <p><strong>Step 7 — Testing Guide</strong></p>
+                    <p>Khuyến nghị:</p>
+                    <ul>
+                        <li>Test bằng .Display trước</li>
+                        <li>Sau khi verify OK thì đổi sang .Send</li>
+                    </ul>
+                    <p>Ví dụ: .Display đổi thành: .Send</p>
+                </div>
+
+                <div class="content-card">
+                    <h2>Lưu ý khi sử dụng</h2>
+                    <ul>
+                        <li>Outlook phải được mở trên máy tính</li>
+                        <li>User cần đăng nhập Outlook trước khi chạy macro</li>
+                        <li>Tên Auditor trong sheet Backlog phải khớp hoàn toàn với sheet Auditors</li>
+                        <li>Nếu không tìm thấy email Auditor, mail sẽ không gửi được</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- JS -->
+        <script src="../../js/script.js"></script>
+        <script>
+            // Load navbar.html vào placeholder
+            fetch("../navbar.html")
+                .then((response) => response.text())
+                .then((data) => {
+                    document.getElementById("navbar-placeholder").innerHTML = data;
+                });
+        </script>
+    </body>
+</html>
